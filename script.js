@@ -28,6 +28,8 @@ const init = function() {
     current1El.textContent = 0;
 
     diceEl.classList.add('hidden');
+    player0El.classList.remove('player--winner');
+    player1El.classList.remove('player--winner');
     player0El.classList.add('player--active');
     player1El.classList.remove('player--active');
 }
@@ -71,8 +73,13 @@ btnHold.addEventListener('click', function() {
         document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
 
         // [2] Check if player's score is >= 100
-        if (scores[activePlayer]) {
+        if (scores[activePlayer] >= 100) {
             // Finish the game
+            playing = false;
+            diceEl.classList.add('hidden');
+
+            document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
+            document.querySelector(`.player--${activePlayer}`).classList.remove('player--active');
         } else {
             // Switch to the next player
             switchPlayer();
